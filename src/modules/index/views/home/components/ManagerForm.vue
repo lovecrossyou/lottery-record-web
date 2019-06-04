@@ -189,7 +189,7 @@
 export default {
   data() {
     return {
-      uploadUrl:'upload/',
+      uploadUrl:'/api/upload/',
       form: {
         invite_group: {
           picture: "",
