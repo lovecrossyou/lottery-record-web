@@ -1,24 +1,34 @@
 <template>
   <el-form ref="form" :model="form" label-width="120px" size="mini">
+    <!-- 比赛类型 -->
     <div class="border-line">
-      <el-form-item label="邀请拼团">
-        <el-upload
-          class="avatar-uploader"
-          :action="uploadUrl"
-          :show-file-list="false"
-          :on-success="handleGroupSuccess"
-        >
-          <img v-if="form.invite_group.picture" :src="form.invite_group.picture" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
+      <el-form-item label="比赛类型">
+        <el-input v-model="form.game_type"></el-input>
       </el-form-item>
-      <el-form-item label="邀请拼团">
-        <el-input v-model="form.invite_group.text"></el-input>
+    </div>
+    <!-- 主队 -->
+    <div class="border-line">
+      <el-form-item label="主队">
+        <el-input v-model="form.home_team"></el-input>
+      </el-form-item>
+    </div>
+    <!-- 客队 -->
+    <div class="border-line">
+      <el-form-item label="客队">
+        <el-input v-model="form.guest_team"></el-input>
       </el-form-item>
     </div>
 
+    <!-- 比赛结果 -->
     <div class="border-line">
-      <el-form-item label="我-邀请好友">
+      <el-form-item label="比赛结果">
+        <el-input v-model="form.game_result"></el-input>
+      </el-form-item>
+    </div>
+
+    <!-- 必发交易盈亏 -->
+    <div class="border-line">
+      <el-form-item label="必发交易盈亏">
         <el-upload
           class="avatar-uploader"
           :action="uploadUrl"
@@ -33,61 +43,11 @@
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item label="我-邀请好友">
-        <el-input v-model="form.me_invite_friend.input_text"></el-input>
-      </el-form-item>
-
-      <el-form-item label="我-邀请好友-链接">
-        <el-upload
-          class="avatar-uploader"
-          :action="uploadUrl"
-          :show-file-list="false"
-          :on-success="handleInviteFriendLinkSuccess"
-        >
-          <img
-            v-if="form.me_invite_friend.invite_link.picture"
-            :src="form.me_invite_friend.invite_link.picture"
-            class="avatar"
-          >
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-      </el-form-item>
-      <el-form-item label="我-邀请好友-链接">
-        <el-input v-model="form.me_invite_friend.invite_link.text"></el-input>
-      </el-form-item>
-      <el-form-item label="我-邀请好友-说明">
-        <el-upload
-          class="avatar-uploader"
-          :action="uploadUrl"
-          :show-file-list="false"
-          :on-success="handleInviteFriendInfoSuccess"
-        >
-          <img
-            v-if="form.me_invite_friend.invite_info.picture"
-            :src="form.me_invite_friend.invite_info.picture"
-            class="avatar"
-          >
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-      </el-form-item>
-      <el-form-item label="我-邀请好友-说明">
-        <el-input v-model="form.me_invite_friend.invite_info.text"></el-input>
-      </el-form-item>
     </div>
 
     <div class="border-line">
-      <el-form-item label="零元抢规则">
-        <el-upload
-          class="avatar-uploader"
-          :action="uploadUrl"
-          :show-file-list="false"
-          :on-success="handleruleZeroSuccess"
-        >
-          <img v-if="form.rule.zero_picture" :src="form.rule.zero_picture" class="avatar">
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-        </el-upload>
-      </el-form-item>
-      <el-form-item label="Common规则">
+
+      <el-form-item label="竞猜交易盈亏">
         <el-upload
           class="avatar-uploader"
           :action="uploadUrl"
@@ -98,7 +58,7 @@
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item label="奖励规则">
+      <el-form-item label="竞猜人气盈亏">
         <el-upload
           class="avatar-uploader"
           :action="uploadUrl"
@@ -112,7 +72,7 @@
     </div>
 
     <div class="border-line">
-      <el-form-item label="首页-零元背景">
+      <el-form-item label="盘口(主客)">
         <el-upload
           class="avatar-uploader"
           :action="uploadUrl"
@@ -123,7 +83,7 @@
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item label="首页-超值精选图">
+      <el-form-item label="盘口(升降盘)">
         <el-upload
           class="avatar-uploader"
           :action="uploadUrl"
@@ -138,7 +98,7 @@
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item label="首页-3D-special">
+      <el-form-item label="赔率(升降)">
         <el-upload
           class="avatar-uploader"
           :action="uploadUrl"
@@ -149,7 +109,7 @@
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item label="首页-3D-header">
+      <el-form-item label="赔率(概率转换)">
         <el-upload
           class="avatar-uploader"
           :action="uploadUrl"
@@ -160,7 +120,7 @@
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item label="首页-banner">
+      <el-form-item label="赔率(赔付控制)">
         <el-upload
           class="avatar-uploader"
           :action="uploadUrl"
@@ -171,8 +131,41 @@
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item label="首页-零元抢label">
-        <el-input v-model="form.zerolabel"></el-input>
+
+      <el-form-item label="近10场战绩">
+        <el-upload
+          class="avatar-uploader"
+          :action="uploadUrl"
+          :show-file-list="false"
+          :on-success="handlehomeBannerSuccess"
+        >
+          <img v-if="form.banner" :src="form.banner" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-form-item>
+
+      <el-form-item label="近10场主客战绩">
+        <el-upload
+          class="avatar-uploader"
+          :action="uploadUrl"
+          :show-file-list="false"
+          :on-success="handlehomeBannerSuccess"
+        >
+          <img v-if="form.banner" :src="form.banner" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-form-item>
+
+      <el-form-item label="态度">
+        <el-upload
+          class="avatar-uploader"
+          :action="uploadUrl"
+          :show-file-list="false"
+          :on-success="handlehomeBannerSuccess"
+        >
+          <img v-if="form.banner" :src="form.banner" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
       </el-form-item>
     </div>
 
@@ -189,7 +182,7 @@
 export default {
   data() {
     return {
-      uploadUrl:'/api/upload/',
+      uploadUrl: "/api/upload/",
       form: {
         invite_group: {
           picture: "",
