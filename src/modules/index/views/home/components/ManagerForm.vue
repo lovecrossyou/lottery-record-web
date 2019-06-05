@@ -179,7 +179,12 @@
 </template>
 
 <script>
-// import {baseUrl}  from "@/util/api"
+import {
+  addLottery,
+  addCategoryM,
+  listCategoryM,
+  delCategoryM
+} from "@/api/getData";
 
 export default {
   data() {
@@ -228,49 +233,44 @@ export default {
     };
   },
   methods: {
-    onSubmit() {
-      console.log("form data ", JSON.stringify(this.form));
+    async onSubmit() {
+      const res = await addLottery(this.form);
+      this.$message({
+        message: res.message,
+        type: "success"
+      });
     },
-    handlepicture_taiduSuccess(res){
+    handlepicture_taiduSuccess(res) {
       this.form.picture_taidu = res.image_path;
     },
-    handlepicture_bifaSuccess(res){
+    handlepicture_bifaSuccess(res) {
       this.form.picture_bifa = res.image_path;
-
     },
-    handlepicture_jcSuccess(res){
+    handlepicture_jcSuccess(res) {
       this.form.picture_jc = res.image_path;
-
     },
-    handlepicture_renqiSuccess(res){
+    handlepicture_renqiSuccess(res) {
       this.form.picture_renqi = res.image_path;
-
     },
-    handlepicture_pankou_zhukeSuccess(res){
+    handlepicture_pankou_zhukeSuccess(res) {
       this.form.picture_pankou_zhuke = res.image_path;
-
     },
-    handlepicture_pankou_shengjiangSuccess(res){
+    handlepicture_pankou_shengjiangSuccess(res) {
       this.form.picture_pankou_shengjiang = res.image_path;
-
     },
-    handlepicture_peilvSuccess(res){
+    handlepicture_peilvSuccess(res) {
       this.form.picture_peilv = res.image_path;
-
     },
-    handlepicture_gailv_zhuanSuccess(res){
+    handlepicture_gailv_zhuanSuccess(res) {
       this.form.picture_gailv_zhuan = res.image_path;
-
     },
-    handlepicture_peifu_controlSuccess(res){
+    handlepicture_peifu_controlSuccess(res) {
       this.form.picture_peifu_control = res.image_path;
-
     },
-    handlepicture_10Success(res){
+    handlepicture_10Success(res) {
       this.form.picture_10 = res.image_path;
-
     },
-    picture_10_duikeSuccess(res){
+    picture_10_duikeSuccess(res) {
       this.form.picture_10_duike = res.image_path;
     }
   }

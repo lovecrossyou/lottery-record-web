@@ -13,7 +13,7 @@ module.exports = {
     proxyTable: {
       '/api': {
         target: 'http://127.0.0.1:7001', // 你接口的域名
-        // changeOrigin: true,
+        changeOrigin: true,
         pathRewrite: {
           '^/api': ''
         }
