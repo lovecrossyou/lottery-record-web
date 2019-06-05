@@ -14,7 +14,7 @@
       </el-form-item>
 
       <el-collapse v-model="activeNames" @change="handleChange">
-        <el-collapse-item title="添加分类" name="1">
+        <el-collapse-item title="添加比赛类型" name="1">
           <el-form ref="typeform" :model="typeform" label-width="120px" size="medium">
             <!-- 比赛类型 -->
             <div class="border-line">

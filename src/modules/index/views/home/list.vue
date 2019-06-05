@@ -2,12 +2,14 @@
   <div>
     <!-- 比赛列表 -->
     <div v-for="(lottery,index) in list" :key="index">
-      <div class="border-line" >
+      <div class="border-line">
         <div>{{lottery.home_team}} -- {{lottery.guest_team}}</div>
         <div class="desc">亚洲杯</div>
         <el-button class="btn-edit" @click.stop="goDetail(lottery)">编辑</el-button>
       </div>
     </div>
+    <!-- 添加数据 -->
+    <div class="border-line" @click.stop="goDetail">+ 添加赛事</div>
   </div>
 </template>
 
@@ -28,7 +30,9 @@ export default {
       this.list = res.data;
     },
     goDetail(lottery) {
-      this.savelottery(lottery);
+      if (lottery) {
+        this.savelottery(lottery);
+      }
       this.$router.push("/list");
     }
   },
@@ -59,8 +63,8 @@ export default {
   bottom: 11px;
 }
 
-.desc{
-        font-size: 12px;
-        color: #e1e1e1;
+.desc {
+  font-size: 12px;
+  color: #e1e1e1;
 }
 </style>        
