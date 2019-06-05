@@ -10,13 +10,11 @@ let baseUrl = '';
 let routerMode = 'hash';
 let baseImgPath;
 
-// if (process.env.NODE_ENV == 'development') {
-	// baseUrl = '//127.0.0.1:7001';
-//     baseImgPath = '';
-// }else{
-// 	baseUrl = '//47.94.169.143:8004'
-//     baseImgPath = '';
-// }
+if (process.env.NODE_ENV == 'development') {
+	baseUrl = '/api';
+}else{
+	baseUrl = ''
+}
 
 export {
 	baseUrl,
