@@ -1,7 +1,7 @@
 <template>
   <el-form ref="form" :model="form" label-width="120px" size="medium">
     <!-- 比赛类型 -->
-    <div class="border-line">
+    <div class="border-line-w">
       <el-form-item label="比赛类型">
         <el-select v-model="form.game_type" placeholder="选择比赛类型">
           <el-option
@@ -12,6 +12,28 @@
           ></el-option>
         </el-select>
       </el-form-item>
+
+      <el-collapse v-model="activeNames" @change="handleChange">
+        <el-collapse-item title="添加分类" name="1">
+          <el-form ref="typeform" :model="typeform" label-width="120px" size="medium">
+            <!-- 比赛类型 -->
+            <div class="border-line">
+              <el-form-item label="比赛类型">
+                <el-input v-model="typeform.name"></el-input>
+              </el-form-item>
+              <!-- 描述 -->
+              <el-form-item label="描述">
+                <el-input v-model="typeform.summary"></el-input>
+              </el-form-item>
+            </div>
+
+            <el-form-item>
+              <el-button type="primary" @click="onSubmitType">创建</el-button>
+              <el-button>取消</el-button>
+            </el-form-item>
+          </el-form>
+        </el-collapse-item>
+      </el-collapse>
     </div>
     <!-- 主队 -->
     <div class="border-line">
@@ -194,7 +216,12 @@ export default {
     return {
       uploadUrl: "/api/upload/",
       options: [],
-      value: ""
+      value: "",
+      activeNames: [],
+      typeform:{
+        name:'',
+        summary:''
+      }
     };
   },
   computed: {
@@ -203,10 +230,18 @@ export default {
       return this.lottery;
     }
   },
-  mounted(){
+  mounted() {
     this.initData();
   },
   methods: {
+    async onSubmitType() {
+      let res = await addCategoryM(this.typeform);
+      this.$message({
+        message: res.message,
+        type: "success"
+      });
+      this.initData();
+    },
     async initData() {
       const res = await listCategoryM();
       this.options = res.data.map(data => {
@@ -263,6 +298,13 @@ export default {
 </script>
 
 <style>
+.border-line-w {
+  border: dashed 1px #e1e1e1;
+  margin-bottom: 10px;
+  padding: 10px;
+  width: 100%;
+}
+
 .border-line {
   border: dashed 1px #e1e1e1;
   margin-bottom: 10px;
