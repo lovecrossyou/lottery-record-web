@@ -1,9 +1,16 @@
 <template>
-  <el-form ref="form" :model="form" label-width="120px" size="mini">
+  <el-form ref="form" :model="form" label-width="120px" size="medium">
     <!-- 比赛类型 -->
     <div class="border-line">
       <el-form-item label="比赛类型">
-        <el-input v-model="form.game_type"></el-input>
+        <el-select v-model="form.game_type" placeholder="选择比赛类型">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          ></el-option>
+        </el-select>
       </el-form-item>
     </div>
     <!-- 主队 -->
@@ -33,28 +40,23 @@
           class="avatar-uploader"
           :action="uploadUrl"
           :show-file-list="false"
-          :on-success="handleInviteFriendSuccess"
+          :on-success="handlepicture_bifaSuccess"
         >
-          <img
-            v-if="form.me_invite_friend.picture"
-            :src="form.me_invite_friend.picture"
-            class="avatar"
-          >
+          <img v-if="form.picture_bifa" :src="form.picture_bifa" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
     </div>
 
     <div class="border-line">
-
       <el-form-item label="竞猜交易盈亏">
         <el-upload
           class="avatar-uploader"
           :action="uploadUrl"
           :show-file-list="false"
-          :on-success="handleruleCommSuccess"
+          :on-success="handlepicture_jcSuccess"
         >
-          <img v-if="form.rule.common_picture" :src="form.rule.common_picture" class="avatar">
+          <img v-if="form.picture_jc" :src="form.picture_jc" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -63,9 +65,9 @@
           class="avatar-uploader"
           :action="uploadUrl"
           :show-file-list="false"
-          :on-success="handleruleAwardSuccess"
+          :on-success="handlepicture_renqiSuccess"
         >
-          <img v-if="form.awards.picture" :src="form.awards.picture" class="avatar">
+          <img v-if="form.picture_renqi" :src="form.picture_renqi" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -77,9 +79,9 @@
           class="avatar-uploader"
           :action="uploadUrl"
           :show-file-list="false"
-          :on-success="handlehomeZeroBgSuccess"
+          :on-success="handlepicture_pankou_zhukeSuccess"
         >
-          <img v-if="form.zerobg" :src="form.zerobg" class="avatar">
+          <img v-if="form.picture_pankou_zhuke" :src="form.picture_pankou_zhuke" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -88,11 +90,11 @@
           class="avatar-uploader"
           :action="uploadUrl"
           :show-file-list="false"
-          :on-success="handlehomeActiveBigSuccess"
+          :on-success="handlepicture_pankou_shengjiangSuccess"
         >
           <img
-            v-if="form.home_activity_big_picture"
-            :src="form.home_activity_big_picture"
+            v-if="form.picture_pankou_shengjiang"
+            :src="form.picture_pankou_shengjiang"
             class="avatar"
           >
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
@@ -103,9 +105,9 @@
           class="avatar-uploader"
           :action="uploadUrl"
           :show-file-list="false"
-          :on-success="handlehome3DSepcialSuccess"
+          :on-success="handlepicture_peilvSuccess"
         >
-          <img v-if="form.threed_spectial" :src="form.threed_spectial" class="avatar">
+          <img v-if="form.picture_peilv" :src="form.picture_peilv" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -114,9 +116,9 @@
           class="avatar-uploader"
           :action="uploadUrl"
           :show-file-list="false"
-          :on-success="handlehome3DHeaderSuccess"
+          :on-success="handlepicture_gailv_zhuanSuccess"
         >
-          <img v-if="form.threed_header" :src="form.threed_header" class="avatar">
+          <img v-if="form.picture_gailv_zhuan" :src="form.picture_gailv_zhuan" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -125,9 +127,9 @@
           class="avatar-uploader"
           :action="uploadUrl"
           :show-file-list="false"
-          :on-success="handlehomeBannerSuccess"
+          :on-success="handlepicture_peifu_controlSuccess"
         >
-          <img v-if="form.banner" :src="form.banner" class="avatar">
+          <img v-if="form.picture_peifu_control" :src="form.picture_peifu_control" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -137,9 +139,9 @@
           class="avatar-uploader"
           :action="uploadUrl"
           :show-file-list="false"
-          :on-success="handlehomeBannerSuccess"
+          :on-success="handlepicture_10Success"
         >
-          <img v-if="form.banner" :src="form.banner" class="avatar">
+          <img v-if="form.picture_10" :src="form.picture_10" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -149,9 +151,9 @@
           class="avatar-uploader"
           :action="uploadUrl"
           :show-file-list="false"
-          :on-success="handlehomeBannerSuccess"
+          :on-success="picture_10_duikeSuccess"
         >
-          <img v-if="form.banner" :src="form.banner" class="avatar">
+          <img v-if="form.picture_10_duike" :src="form.picture_10_duike" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -161,9 +163,9 @@
           class="avatar-uploader"
           :action="uploadUrl"
           :show-file-list="false"
-          :on-success="handlehomeBannerSuccess"
+          :on-success="handlepicture_taiduSuccess"
         >
-          <img v-if="form.banner" :src="form.banner" class="avatar">
+          <img v-if="form.picture_taidu" :src="form.picture_taidu" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
@@ -184,78 +186,92 @@ export default {
     return {
       uploadUrl: "/api/upload/",
       form: {
-        invite_group: {
-          picture: "",
-          text: ""
+        home_team: "",
+        guest_team: "",
+        game_type: "",
+        game_result: "",
+        picture_bifa: "",
+        picture_jc: "",
+        picture_renqi: "",
+        picture_pankou_zhuke: "",
+        picture_pankou_shengjiang: "",
+        picture_peilv: "",
+        picture_gailv_zhuan: "",
+        picture_peifu_control: "",
+        picture_10: "",
+        picture_10_duike: "",
+        picture_taidu: ""
+      },
+      options: [
+        {
+          value: "选项1",
+          label: "黄金糕"
         },
-        me_invite_friend: {
-          input_text: "",
-          picture: "",
-          invite_link: {
-            picture: "",
-            text: ""
-          },
-          invite_info: {
-            picture: "",
-            text: ""
-          }
+        {
+          value: "选项2",
+          label: "双皮奶"
         },
-        rule: {
-          zero_picture: "",
-          common_picture: ""
+        {
+          value: "选项3",
+          label: "蚵仔煎"
         },
-        awards: {
-          picture: ""
+        {
+          value: "选项4",
+          label: "龙须面"
         },
-        zerobg: "",
-        home_activity_big_picture: "",
-        threed_spectial: "",
-        threed_header: "",
-        banner: "",
-        zerolabel: "7D抢"
-      }
+        {
+          value: "选项5",
+          label: "北京烤鸭"
+        }
+      ],
+      value: ""
     };
   },
   methods: {
     onSubmit() {
-      // console.log("form data ", JSON.stringify(this.form));
+      console.log("form data ", JSON.stringify(this.form));
     },
-    handleGroupSuccess(res) {
-      this.form.invite_group.picture = res.imgUrl;
+    handlepicture_taiduSuccess(res){
+      this.form.picture_taidu = res.image_path;
     },
-    handleInviteFriendSuccess(res) {
-      this.form.me_invite_friend.picture = res.imgUrl;
-    },
-    handleInviteFriendLinkSuccess(res) {
-      this.form.me_invite_friend.invite_link.picture = res.imgUrl;
-    },
-    handleInviteFriendInfoSuccess(res) {
-      this.form.me_invite_friend.invite_info.picture = res.imgUrl;
-    },
+    handlepicture_bifaSuccess(res){
+      this.form.picture_bifa = res.image_path;
 
-    handleruleZeroSuccess(res) {
-      this.form.rule.zero_picture = res.imgUrl;
     },
-    handleruleCommSuccess(res) {
-      this.form.rule.common_picture = res.imgUrl;
+    handlepicture_jcSuccess(res){
+      this.form.picture_jc = res.image_path;
+
     },
-    handleruleAwardSuccess(res) {
-      this.form.awards.picture = res.imgUrl;
+    handlepicture_renqiSuccess(res){
+      this.form.picture_renqi = res.image_path;
+
     },
-    handlehomeZeroBgSuccess(res) {
-      this.form.zerobg = res.imgUrl;
+    handlepicture_pankou_zhukeSuccess(res){
+      this.form.picture_pankou_zhuke = res.image_path;
+
     },
-    handlehomeActiveBigSuccess(res) {
-      this.form.home_activity_big_picture = res.imgUrl;
+    handlepicture_pankou_shengjiangSuccess(res){
+      this.form.picture_pankou_shengjiang = res.image_path;
+
     },
-    handlehome3DSepcialSuccess(res) {
-      this.form.threed_spectial = res.imgUrl;
+    handlepicture_peilvSuccess(res){
+      this.form.picture_peilv = res.image_path;
+
     },
-    handlehome3DHeaderSuccess(res) {
-      this.form.threed_header = res.imgUrl;
+    handlepicture_gailv_zhuanSuccess(res){
+      this.form.picture_gailv_zhuan = res.image_path;
+
     },
-    handlehomeBannerSuccess(res) {
-      this.form.banner = res.imgUrl;
+    handlepicture_peifu_controlSuccess(res){
+      this.form.picture_peifu_control = res.image_path;
+
+    },
+    handlepicture_10Success(res){
+      this.form.picture_10 = res.image_path;
+
+    },
+    picture_10_duikeSuccess(res){
+      this.form.picture_10_duike = res.image_path;
     }
   }
 };
