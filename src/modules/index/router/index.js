@@ -8,6 +8,11 @@ export default new Router({
     {
       path: '/',
       name: 'index',
+      component: () => import('../views/home/list') // 路由懒加载
+    },
+    {
+      path: '/list',
+      name: 'list',
       component: () => import('../views/home') // 路由懒加载
     }
   ]

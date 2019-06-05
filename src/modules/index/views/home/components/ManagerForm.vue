@@ -172,7 +172,8 @@
     </div>
 
     <el-form-item>
-      <el-button type="primary" @click="onSubmit">创建</el-button>
+      <el-button v-if="this.form._id" type="primary" @click="onSubmit">更新</el-button>
+      <el-button v-else type="primary" @click="onSubmit">创建</el-button>
       <el-button>取消</el-button>
     </el-form-item>
   </el-form>
@@ -181,32 +182,18 @@
 <script>
 import {
   addLottery,
+  updateLottery,
+
   addCategoryM,
   listCategoryM,
   delCategoryM
 } from "@/api/getData";
+import { mapActions, mapMutations,mapState } from "vuex";
 
 export default {
   data() {
     return {
       uploadUrl: "/api/upload/",
-      form: {
-        home_team: "",
-        guest_team: "",
-        game_type: "",
-        game_result: "",
-        picture_bifa: "",
-        picture_jc: "",
-        picture_renqi: "",
-        picture_pankou_zhuke: "",
-        picture_pankou_shengjiang: "",
-        picture_peilv: "",
-        picture_gailv_zhuan: "",
-        picture_peifu_control: "",
-        picture_10: "",
-        picture_10_duike: "",
-        picture_taidu: ""
-      },
       options: [
         {
           value: "选项1",
@@ -232,9 +219,22 @@ export default {
       value: ""
     };
   },
+  computed: {
+    ...mapState(["lottery"]),
+    form(){
+      return this.lottery;
+    }
+
+  },
   methods: {
     async onSubmit() {
-      const res = await addLottery(this.form);
+      let res;
+      if(this.form._id){
+        res = await updateLottery(this.form);
+      }
+      else{
+         res = await addLottery(this.form);
+      }
       this.$message({
         message: res.message,
         type: "success"
