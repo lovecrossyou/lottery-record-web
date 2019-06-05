@@ -14,6 +14,11 @@ export default new Router({
       path: '/list',
       name: 'list',
       component: () => import('../views/home') // 路由懒加载
+    },
+    {
+      path: '/sort',
+      name: 'sort',
+      component: () => import('../views/home/sort') // 路由懒加载
     }
   ]
 })

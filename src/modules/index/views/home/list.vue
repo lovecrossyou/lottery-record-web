@@ -2,10 +2,11 @@
   <div>
     <!-- 比赛列表 -->
     <div v-for="(lottery,index) in list" :key="index">
-      <div
-        class="border-line"
-        @click="goDetail(lottery)"
-      >{{lottery.home_team}} -- {{lottery.guest_team}}</div>
+      <div class="border-line" >
+        <div>{{lottery.home_team}} -- {{lottery.guest_team}}</div>
+        <div class="desc">亚洲杯</div>
+        <el-button class="btn-edit" @click.stop="goDetail(lottery)">编辑</el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -47,5 +48,19 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
+  position: relative;
 }
-</style>
+
+.btn-edit {
+  position: absolute;
+
+  right: 5px;
+  bottom: 11px;
+}
+
+.desc{
+        font-size: 12px;
+        color: #e1e1e1;
+}
+</style>        

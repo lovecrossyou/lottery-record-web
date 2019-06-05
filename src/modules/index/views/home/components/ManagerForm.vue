@@ -183,57 +183,42 @@
 import {
   addLottery,
   updateLottery,
-
   addCategoryM,
   listCategoryM,
   delCategoryM
 } from "@/api/getData";
-import { mapActions, mapMutations,mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 
 export default {
   data() {
     return {
       uploadUrl: "/api/upload/",
-      options: [
-        {
-          value: "选项1",
-          label: "黄金糕"
-        },
-        {
-          value: "选项2",
-          label: "双皮奶"
-        },
-        {
-          value: "选项3",
-          label: "蚵仔煎"
-        },
-        {
-          value: "选项4",
-          label: "龙须面"
-        },
-        {
-          value: "选项5",
-          label: "北京烤鸭"
-        }
-      ],
+      options: [],
       value: ""
     };
   },
   computed: {
     ...mapState(["lottery"]),
-    form(){
+    form() {
       return this.lottery;
     }
-
+  },
+  mounted(){
+    this.initData();
   },
   methods: {
+    async initData() {
+      const res = await listCategoryM();
+      this.options = res.data.map(data => {
+        return { value: data._id, label: data.name };
+      });
+    },
     async onSubmit() {
       let res;
-      if(this.form._id){
+      if (this.form._id) {
         res = await updateLottery(this.form);
-      }
-      else{
-         res = await addLottery(this.form);
+      } else {
+        res = await addLottery(this.form);
       }
       this.$message({
         message: res.message,
