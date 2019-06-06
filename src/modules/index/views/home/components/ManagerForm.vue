@@ -15,10 +15,10 @@
 
       <el-collapse v-model="activeNames" @change="handleChange">
         <el-collapse-item title="添加比赛类型" name="1">
-          <el-form ref="typeform" :model="typeform" label-width="120px" size="medium">
+          <el-form ref="typeform" :model="typeform" label-width="60px" size="medium">
             <!-- 比赛类型 -->
-            <div class="border-line">
-              <el-form-item label="比赛类型">
+            <div class="border-line1">
+              <el-form-item label="名称">
                 <el-input v-model="typeform.name"></el-input>
               </el-form-item>
               <!-- 描述 -->
@@ -214,7 +214,7 @@ import { mapActions, mapMutations, mapState } from "vuex";
 export default {
   data() {
     return {
-      uploadUrl: "/api/upload/",
+      uploadUrl: "/upload/",
       options: [],
       value: "",
       activeNames: [],
@@ -292,6 +292,9 @@ export default {
     },
     picture_10_duikeSuccess(res) {
       this.form.picture_10_duike = res.image_path;
+    },
+    handleChange(){
+      
     }
   }
 };
@@ -302,7 +305,7 @@ export default {
   border: dashed 1px #e1e1e1;
   margin-bottom: 10px;
   padding: 10px;
-  width: 100%;
+  width: 95%;
 }
 
 .border-line {
