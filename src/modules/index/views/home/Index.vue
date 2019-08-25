@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-     <h5>数据录入~~</h5>
+     <h5>AMERICAN SUNION OCR TEST</h5>
     <ManagerForm msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
